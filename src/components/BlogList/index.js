@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
+
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
 import BlogItem from '../BlogItem'
@@ -13,9 +14,10 @@ class BlogList extends Component {
     this.getBlogsData()
   }
 
-  getBlogsData =  () => {
-    const response = await fech('https://apis.ccbp.in/blogs')
-    const formattedData = response.map(eachItem => ({
+  getBlogsData = async () => {
+    const response = await fetch('https://apis.ccbp.in/blogs')
+    const data = await response.json()
+    const formattedData = data.map(eachItem => ({
       id: eachItem.id,
       title: eachItem.title,
       imageUrl: eachItem.image_url,
@@ -23,12 +25,11 @@ class BlogList extends Component {
       author: eachItem.author,
       topic: eachItem.topic,
     }))
-    this.setState({isLoading: false})
+    this.setState({isLoading: false, blogsData: formattedData})
   }
 
   render() {
     const {blogsData, isLoading} = this.state
-    this.getBlogsData()
 
     return (
       <div className="blogs-list-container">
@@ -39,7 +40,7 @@ class BlogList extends Component {
         ) : (
           <ul className="blogs-list">
             {blogsData.map(eachBlogItem => (
-              <BlogItem blogItemDetails={eachBlogItem} />
+              <BlogItem key={eachBlogItem.id} blogItemDetails={eachBlogItem} />
             ))}
           </ul>
         )}

@@ -7,8 +7,8 @@ const BlogItem = props => {
   const {id, imageUrl, topic, title, avatarUrl, author} = blogItemDetails
 
   return (
-    <li className="blog-item">
-      <Link to={`/blogs/${id}`} className="blog-item-link">
+    <Link to={`/blogs/${id}`} className="blog-item-link">
+      <li className="blog-item">
         <div className="blog-item-container">
           <img className="blog-item-image" src={imageUrl} alt={`item${id}`} />
           <div className="blog-item-info">
@@ -20,8 +20,8 @@ const BlogItem = props => {
             </div>
           </div>
         </div>
-      </Link>
-    </li>
+      </li>
+    </Link>
   )
 }
 
